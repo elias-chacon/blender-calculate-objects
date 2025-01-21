@@ -8,7 +8,7 @@ bl_info = {
 
 import bpy
 import csv
-from bpy.props import StringProperty, EnumProperty
+from bpy.props import StringProperty, EnumProperty, BoolProperty
 from pathlib import Path
 
 # Global variable for history tracking
@@ -35,6 +35,8 @@ def calculate_sum(prefix, operation):
             result += dim_y * dim_z
         elif operation == 'AREA_XYZ':
             result += dim_x * dim_y * dim_z
+        elif operation == 'BIGGEST':
+            result += max(dim_x, dim_y, dim_z)
 
     return result, len(selected_objects), selected_objects
 
@@ -145,7 +147,8 @@ bpy.types.Scene.calculation_type = EnumProperty(
         ('AREA_XY', "Area XY", "Sum of XY areas"),
         ('AREA_XZ', "Area XZ", "Sum of XZ areas"),
         ('AREA_YZ', "Area YZ", "Sum of YZ areas"),
-        ('AREA_XYZ', "Area XYZ", "Sum of XYZ volumes")
+        ('AREA_XYZ', "Area XYZ", "Sum of XYZ volumes"),
+        ('BIGGEST', "Bigger Size", "Sum of the biggest dimension for each object")
     ],
     default='X'
 )
@@ -168,7 +171,6 @@ def register():
     bpy.utils.register_class(OBJECT_OT_ExportPrefixSumCSV)
     bpy.utils.register_class(OBJECT_OT_OpenPrefixSumWindow)
     bpy.types.VIEW3D_MT_object_context_menu.append(menu_func)
-
 
 def unregister():
     bpy.utils.unregister_class(OBJECT_PT_PrefixSumTool)
