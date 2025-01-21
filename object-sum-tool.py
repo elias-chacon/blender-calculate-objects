@@ -2,7 +2,7 @@ bl_info = {
     "name": "Object Sum Tool",
     "blender": (2, 80, 0),
     "category": "Object",
-    "author": "ChatGPT",
+    "author": "Elias Alves Chacon",
     "description": "Calculate sum of dimensions or area for objects with the same name prefix."
 }
 
